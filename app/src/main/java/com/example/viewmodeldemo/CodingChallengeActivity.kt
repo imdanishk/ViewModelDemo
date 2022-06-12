@@ -10,12 +10,14 @@ class CodingChallengeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCodingChallengeBinding
     private lateinit var viewModel: CodingChallengeViewModel
+    private lateinit var viewModelFactory: CodingChallengeViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_coding_challenge)
 
-        viewModel = ViewModelProvider(this).get(CodingChallengeViewModel::class.java)
+        viewModelFactory = CodingChallengeViewModelFactory(125)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(CodingChallengeViewModel::class.java)
         binding.tvResult.text = viewModel.getTotal().toString()
 
         binding.btnAdd.setOnClickListener {
