@@ -1,19 +1,25 @@
 package com.example.viewmodeldemo
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class CodingChallengeViewModel(startingTotal: Int) : ViewModel() {
-    private var total = 0
+    private var total = MutableLiveData<Int>()
+    val totalData : LiveData<Int>
+    /*
+    This total is a mutable livedata object but mutable livedata object
+    is a subclass of livedata. So, this total can also be considered as
+    a livedata object.
+     */
+    get() = total
 
     // Init block to assign the passed startingTotal value to the total variable
     init {
-        total = startingTotal
+        total.value = startingTotal
     }
 
-    fun getTotal() : Int {
-        return total
-    }
     fun setTotal(input : Int) {
-        total += input
+        total.value = (total.value)?.plus(input)
     }
 }
